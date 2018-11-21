@@ -1,0 +1,15 @@
+Package: rtweetComp
+Type: Package
+Title: rtweetComp
+Version: 0.0.9000
+Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
+  role = c("aut", "cre"))
+Description: An overlay R for the use of rtweet.
+Depends: R (>= 3.4.0)
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.0
+Imports: 
+    magrittr
