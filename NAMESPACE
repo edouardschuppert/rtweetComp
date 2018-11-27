@@ -2,6 +2,7 @@
 
 export("%>%")
 export(turnToAccount)
+export(turnToPost)
 importFrom(dplyr,mutate)
 importFrom(dplyr,select)
 importFrom(magrittr,"%>%")
