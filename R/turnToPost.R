@@ -38,7 +38,7 @@ turnToPost <- function(df) {
            hashtags = str_replace(.data$hashtags, "^[[:space:]]#", "#")) %>%
     filter(str_detect(.data$hashtags, "^#$") == FALSE) %>%
     mutate(hashtags = ifelse(.data$hashtags == "character(0", NA, .data$hashtags)) %>%
-    select(.data$user_id, .data$status_id, .data$created_at, .data$screen_name, .data$text, .data$favorite_count, .data$retweet_count, .data$engagement,
+    select(.data$user_id, .data$status_id, .data$created_at, .data$screen_name, .data$followers_count, .data$text, .data$favorite_count, .data$retweet_count, .data$engagement,
            .data$hashtags, .data$lang, .data$source, .data$url_post, .data$is_retweet, .data$is_quote, .data$urls_url, .data$urls_t.co, .data$urls_expanded_url,
            .data$media_url, .data$media_t.co, .data$media_expanded_url, .data$media_type, .data$ext_media_url, .data$ext_media_t.co, .data$ext_media_expanded_url,
            .data$ext_media_type, .data$retweet_url, .data$retweet_status_id, .data$retweet_user_id, .data$retweet_screen_name, .data$retweet_created_at,
@@ -51,6 +51,7 @@ turnToPost <- function(df) {
 }
 
 # Colonne avec typologie des retweeters
+# Refaire flatlist avec get()
 
 
 
