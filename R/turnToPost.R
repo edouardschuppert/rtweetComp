@@ -8,6 +8,8 @@
 #' @importFrom rlang .data
 #' @importFrom stringr str_extract_all
 #' @importFrom stringr str_remove_all
+#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_remove
 #' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
 #' @import rex
@@ -37,7 +39,11 @@ turnToPost <- function(df) {
            hashtags = str_remove_all(.data$hashtags, "\n"),
            hashtags = str_replace(.data$hashtags, "^[[:space:]]#", "#")) %>%
     filter(str_detect(.data$hashtags, "^#$") == FALSE) %>%
-    mutate(hashtags = ifelse(.data$hashtags == "character(0", NA, .data$hashtags)) %>%
+    mutate(hashtags = ifelse(.data$hashtags == "character(0", NA, .data$hashtags),
+           hashtags = as.character(povertext(.data$hashtags)),
+           hashtags = str_replace_all(.data$hashtags, rex::rex("\\n"), " "),
+           hashtags = str_remove(.data$hashtags, "^[[:space:]]+"),
+           hashtags = str_remove(.data$hashtags, "[[:space:]]+$")) %>%
     select(.data$user_id, .data$status_id, .data$created_at, .data$screen_name, .data$followers_count, .data$text, .data$favorite_count, .data$retweet_count, .data$engagement,
            .data$hashtags, .data$lang, .data$source, .data$url_post, .data$is_retweet, .data$is_quote, .data$urls_url, .data$urls_t.co, .data$urls_expanded_url,
            .data$media_url, .data$media_t.co, .data$media_expanded_url, .data$media_type, .data$ext_media_url, .data$ext_media_t.co, .data$ext_media_expanded_url,
@@ -47,61 +53,5 @@ turnToPost <- function(df) {
            .data$quoted_retweet_count, .data$quoted_source, .data$reply_to_status_id, .data$reply_to_user_id, .data$reply_to_screen_name, .data$mentions_user_id,
            .data$mentions_screen_name, .data$stamp, .data$display_text_width, .data$characters, .data$symbols) %>%
     flatlist()
-
-}
-
-# Colonne avec typologie des retweeters
-# Refaire flatlist avec get()
-
-
-
-# Ajouts : flatlist
-
-#' flatlist
-#'
-#' @importFrom dplyr select
-#' @importFrom dplyr mutate
-#' @param df Your data frame
-#' @return allows you to manage the columns of an array in list format, transforming them into character columns.
-
-flatlist <- function(df) {
-
-  i <- as.numeric(length(df))
-
-  while (i != 0) {
-
-    x <- df %>% select(i)
-
-    stock <- names(x)
-
-    names(x) <- "temp_name"
-
-    if (class(x$temp_name) == "list") {
-
-      x <- x %>%
-        mutate(temp_name = as.character(.data$temp_name))
-
-    }
-
-    names(x) <- stock
-
-    if (exists("newtab") == TRUE) {
-
-      newtab <- cbind(x, newtab)
-
-    }
-
-    if (exists("newtab") == FALSE) {
-
-      newtab <- x
-
-    }
-
-    rm(x, stock)
-
-    i <- i - 1
-  }
-
-  newtab
 
 }
