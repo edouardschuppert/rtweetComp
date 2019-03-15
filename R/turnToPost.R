@@ -55,3 +55,8 @@ turnToPost <- function(df) {
     flatlist()
 
 }
+
+
+# A FAIRE :
+# affiner encore colonne #
+# function retournement liens
