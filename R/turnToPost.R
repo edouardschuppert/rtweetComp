@@ -48,7 +48,7 @@ turnToPost <- function(df) {
            .data$hashtags, .data$lang, .data$source, .data$url_post, .data$is_retweet, .data$is_quote, .data$urls_url, .data$urls_t.co, .data$urls_expanded_url,
            .data$media_url, .data$media_t.co, .data$media_expanded_url, .data$media_type, .data$ext_media_url, .data$ext_media_t.co, .data$ext_media_expanded_url,
            .data$ext_media_type, .data$retweet_url, .data$retweet_status_id, .data$retweet_user_id, .data$retweet_screen_name, .data$retweet_created_at,
-           .data$retweet_.data$text, .data$retweet_favorite_count, .data$retweet_retweet_count, .data$retweet_engagement, .data$retweet_source, .data$quoted_url,
+           .data$retweet_favorite_count, .data$retweet_retweet_count, .data$retweet_engagement, .data$retweet_source, .data$quoted_url,
            .data$quoted_status_id, .data$quoted_user_id, .data$quoted_screen_name, .data$quoted_created_at, .data$quoted_text, .data$quoted_favorite_count,
            .data$quoted_retweet_count, .data$quoted_source, .data$reply_to_status_id, .data$reply_to_user_id, .data$reply_to_screen_name, .data$mentions_user_id,
            .data$mentions_screen_name, .data$stamp, .data$display_text_width, .data$characters, .data$symbols) %>%
