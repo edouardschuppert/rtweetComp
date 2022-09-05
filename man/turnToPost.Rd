@@ -4,10 +4,12 @@
 \alias{turnToPost}
 \title{turnToPost}
 \usage{
-turnToPost(df)
+turnToPost(df, complete_user = FALSE)
 }
 \arguments{
 \item{df}{The target table}
+
+\item{complete_user}{Run a query to retrieve missing user data. Default set to FALSE}
 }
 \value{
 A posts dataset

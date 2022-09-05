@@ -13,5 +13,5 @@ turnToAccount(df)
 A user dataset
 }
 \description{
-Turn the 88 columns returned by rtweet into a user account dataset
+Turn the columns returned by rtweet into a user account dataset
 }

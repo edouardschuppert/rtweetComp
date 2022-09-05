@@ -1,7 +1,7 @@
 Package: rtweetComp
 Type: Package
 Title: rtweetComp
-Version: 0.0.9001
+Version: 1.0.0
 Authors@R: person("Edouard", "Schuppert", email = "edouard.schuppert@gmail.com",
   role = c("aut", "cre"))
 Description: An overlay R for the use of rtweet.
@@ -10,10 +10,12 @@ License: CC0
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.1
 Imports: 
-    magrittr,
+    bit64,
     dplyr,
-    stringr,
+    lubridate,
+    magrittr,
     rex,
-    rlang
+    rlang,
+    stringr
