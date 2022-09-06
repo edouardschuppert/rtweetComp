@@ -1,4 +1,4 @@
-# Ajouts : flatlist
+# Ajouts : flatlist, povertext, convert_date
 
 #' flatlist
 #'
@@ -87,3 +87,43 @@ povertext <- function(val) {
   val
 
 }
+
+#' convert_date
+#'
+#' Convert messy dates as they come from the Twitter API in text format
+#' @importFrom stringr str_extract
+#' @importFrom stringr str_remove_all
+#' @importFrom dplyr recode
+#' @importFrom lubridate as_datetime
+#' @import rex
+#' @param created_at the date string to convert
+#' @return Return the date in a datetime format
+
+convert_date <-
+  function(created_at) {
+
+    quoted_created_at_h <- str_extract(created_at, rex(numbers, ":", numbers, ":", numbers))
+    quoted_created_at_y <- str_extract(created_at, rex(number, number, number, number, end))
+    quoted_created_at_j <- str_extract(created_at, rex(space, numbers, numbers, space))
+    quoted_created_at_j <- str_remove_all(quoted_created_at_j, rex(spaces))
+    quoted_created_at_m <- str_extract(created_at, rex(space, letters, space))
+    quoted_created_at_m <- str_remove_all(quoted_created_at_m, rex(spaces))
+    quoted_created_at_m <- recode(
+      quoted_created_at_m,
+      "Jan" = "01",
+      "Feb" = "02",
+      "Mar" = "03",
+      "Apr" = "04",
+      "May" = "05",
+      "Jun" = "06",
+      "Jul" = "07",
+      "Aug" = "08",
+      "Sep" = "09",
+      "Oct" = "10",
+      "Nov" = "11",
+      "Dec" = "12"
+    )
+
+    as_datetime(paste0(quoted_created_at_y, "-", quoted_created_at_m, "-", quoted_created_at_j, " ", quoted_created_at_h))
+
+  }

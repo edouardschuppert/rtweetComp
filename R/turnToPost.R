@@ -4,20 +4,11 @@
 #'
 #' @importFrom dplyr select
 #' @importFrom dplyr mutate
-#' @importFrom dplyr filter
-#' @importFrom dplyr recode
 #' @importFrom lubridate as_datetime
 #' @importFrom rlang .data
-#' @importFrom stringr str_extract
-#' @importFrom stringr str_extract_all
-#' @importFrom stringr str_remove_all
-#' @importFrom stringr str_replace_all
-#' @importFrom stringr str_remove
-#' @importFrom stringr str_replace
 #' @importFrom stringr str_detect
 #' @importFrom bit64 as.integer64
 #' @importFrom rtweet users_data
-#' @importFrom bit64 as.integer64
 #' @import rex
 #' @import tibble
 #' @param df The target table
@@ -41,33 +32,6 @@ turnToPost <- function(
         followers_count = NA
       )
   }
-
-  # function convert dates
-  convert_date <-
-    function(created_at) {
-      quoted_created_at_h <- str_extract(created_at, rex(numbers, ":", numbers, ":", numbers))
-      quoted_created_at_y <- str_extract(created_at, rex(number, number, number, number, end))
-      quoted_created_at_j <- str_extract(created_at, rex(space, numbers, numbers, space))
-      quoted_created_at_j <- str_remove_all(quoted_created_at_j, rex(spaces))
-      quoted_created_at_m <- str_extract(created_at, rex(space, letters, space))
-      quoted_created_at_m <- str_remove_all(quoted_created_at_m, rex(spaces))
-      quoted_created_at_m <- recode(
-        quoted_created_at_m,
-        "Jan" = "01",
-        "Feb" = "02",
-        "Mar" = "03",
-        "Apr" = "04",
-        "May" = "05",
-        "Jun" = "06",
-        "Jul" = "07",
-        "Aug" = "08",
-        "Sep" = "09",
-        "Oct" = "10",
-        "Nov" = "11",
-        "Dec" = "12"
-      )
-      as_datetime(paste0(quoted_created_at_y, "-", quoted_created_at_m, "-", quoted_created_at_j, " ", quoted_created_at_h))
-    }
 
   # processing of tweets globally
   df2 <-

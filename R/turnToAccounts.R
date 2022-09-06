@@ -6,6 +6,8 @@
 #' @importFrom dplyr mutate
 #' @importFrom rlang .data
 #' @importFrom bit64 as.integer64
+#' @importFrom stringr str_detect
+#' @importFrom as_datetime
 #' @param df The target table
 #' @return A user dataset
 #' @export
@@ -17,11 +19,13 @@ turnToAccount <- function(df) {
       url_account = paste0("https://twitter.com/", .data$screen_name),
       user_id = as.integer64(.data$id_str),
       account_created_at = .data$created_at,
+      account_created_at = ifelse(str_detect(account_created_at, "[[:alpha:]]+") == TRUE, convert_date(account_created_at), account_created_at),
+      account_created_at = as_datetime(account_created_at),
       profile_image_url = .data$profile_image_url_https,
       profile_url = .data$url,
       profile_expanded_url = NA,
       account_lang = NA,
-      profile_background_url = NA
+      profile_background_url = NA,
     ) %>%
     select(
       .data$user_id,
