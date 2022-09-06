@@ -18,4 +18,6 @@ Imports:
     magrittr,
     rex,
     rlang,
-    stringr
+    rtweet,
+    stringr,
+    tibble
