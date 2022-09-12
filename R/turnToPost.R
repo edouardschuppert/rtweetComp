@@ -97,6 +97,14 @@ turnToPost <- function(
   # processing tweets one by one
   for (i in 1:nrow(df2)) {
 
+    medias <- df[[7]][[i]][["media"]]
+
+    if (is.na(medias$media_url) == FALSE) {
+      df2$media_url[i] <- medias$media_url
+      df2$media_expanded_url[i] <- medias$expanded_url
+      df2$media_t.co[i] <- medias$url
+    }
+
     retweets <- df$retweeted_status[i][[1]]
 
     if (is.data.frame(retweets) == TRUE) {
@@ -178,6 +186,7 @@ turnToPost <- function(
     }
 
     rm(
+      medias,
       hashtags,
       quoted,
       quoted_user_id,
