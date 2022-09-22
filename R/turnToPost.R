@@ -95,15 +95,17 @@ turnToPost <- function(
     )
 
   # processing tweets one by one
-  for (i in 1:nrow(df2)) {
+  suppressWarnings(for (i in 1:nrow(df2)) {
 
     medias <- df[[7]][[i]][["media"]]
 
-    if (is.na(medias$media_url[1]) == FALSE) {
-      df2$media_url[i] <- paste(medias$media_url, collapse = ", ")
-      df2$media_expanded_url[i] <- paste(medias$expanded_url, collapse = ", ")
-      df2$media_t.co[i] <- paste(medias$url, collapse = ", ")
-      df2$media_type[i] <- paste(medias$type, collapse = ", ")
+    if (is.null(medias) == FALSE) {
+      if (is.na(medias$media_url[1]) == FALSE) {
+        df2$media_url[i] <- paste(medias$media_url, collapse = ", ")
+        df2$media_expanded_url[i] <- paste(medias$expanded_url, collapse = ", ")
+        df2$media_t.co[i] <- paste(medias$url, collapse = ", ")
+        df2$media_type[i] <- paste(medias$type, collapse = ", ")
+      }
     }
 
     retweets <- df$retweeted_status[i][[1]]
@@ -173,7 +175,7 @@ turnToPost <- function(
       df2$quoted_text[i] <- quoted_text
 
       quoted_created_at <- quoted$created_at
-      df2$quoted_created_at[i] <- convert_date(quoted_created_at)
+      df2$quoted_created_at[i] <- suppressWarnings(convert_date(quoted_created_at))
 
       quoted_source <- quoted$source
       df2$quoted_source[i] <- quoted_source
@@ -218,7 +220,7 @@ turnToPost <- function(
       retweet_url,
       retweet_user_id
     )
-  }
+  })
   rm(i)
 
   # column selection
@@ -279,7 +281,7 @@ turnToPost <- function(
       .data$characters,
       .data$symbols
     ) %>%
-    flatlist()
+    suppressMessages(flatlist())
 
   df2
 }
