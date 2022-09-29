@@ -165,28 +165,31 @@ turnToPost <- function(
 
     quoted <- df[[29]][[i]]
     if (is.data.frame(quoted) == TRUE) {
+      if (is.null(quoted$user$id_str) == FALSE) {
 
-      quoted_user_id <- ifelse(is.null(quoted$user$id_str) == FALSE, as.integer64(quoted$user$id_str), NA)
-      df2$quoted_user_id[i] <- quoted_user_id
+        quoted_user_id <- as.integer64(quoted$user$id_str)
+        df2$quoted_user_id[i] <- quoted_user_id
 
-      quoted_screen_name <- ifelse(is.null(quoted$user$screen_name) == FALSE, quoted$user$screen_name, NA)
-      df2$quoted_screen_name[i] <- quoted_screen_name
+        quoted_screen_name <- quoted$user$screen_name
+        df2$quoted_screen_name[i] <- quoted_screen_name
 
-      quoted_text <- ifelse(is.null(quoted$full_text) == FALSE, quoted$full_text, NA)
-      df2$quoted_text[i] <- quoted_text
+        quoted_text <- quoted$full_text
+        df2$quoted_text[i] <- quoted_text
 
-      quoted_created_at <- ifelse(is.null(quoted$created_at) == FALSE, suppressWarnings(convert_date(quoted$created_at)), NA)
-      df2$quoted_created_at[i] <- quoted_created_at
+        quoted_created_at <- suppressWarnings(convert_date(quoted$created_at))
+        df2$quoted_created_at[i] <- quoted_created_at
 
-      quoted_source <- ifelse(is.null(quoted$source) == FALSE, quoted$source, NA)
-      df2$quoted_source[i] <- quoted_source
+        quoted_source <- quoted$source
+        df2$quoted_source[i] <- quoted_source
 
-      quoted_url <- ifelse(
-        is.na(quoted_screen_name) == TRUE,
-        NA,
-        paste0("https://twitter.com/", quoted_screen_name, "/status/", df$quoted_status_id[i])
-      )
-      df2$quoted_url[i] <- quoted_url
+        quoted_url <- ifelse(
+          is.na(quoted_screen_name) == TRUE,
+          NA,
+          paste0("https://twitter.com/", quoted_screen_name, "/status/", df$quoted_status_id[i])
+        )
+        df2$quoted_url[i] <- quoted_url
+
+      }
     }
 
     rm(
