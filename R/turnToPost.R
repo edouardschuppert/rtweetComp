@@ -165,19 +165,20 @@ turnToPost <- function(
 
     quoted <- df[[29]][[i]]
     if (is.data.frame(quoted) == TRUE) {
-      quoted_user_id <- as.integer64(quoted$user$id_str)
+
+      quoted_user_id <- ifelse(is.null(quoted$user$id_str) == FALSE, as.integer64(quoted$user$id_str), NA)
       df2$quoted_user_id[i] <- quoted_user_id
 
-      quoted_screen_name <- quoted$user$screen_name
+      quoted_screen_name <- ifelse(is.null(quoted$user$screen_name) == FALSE, quoted$user$screen_name, NA)
       df2$quoted_screen_name[i] <- quoted_screen_name
 
-      quoted_text <- quoted$full_text
+      quoted_text <- ifelse(is.null(quoted$full_text) == FALSE, quoted$full_text, NA)
       df2$quoted_text[i] <- quoted_text
 
-      quoted_created_at <- quoted$created_at
-      df2$quoted_created_at[i] <- suppressWarnings(convert_date(quoted_created_at))
+      quoted_created_at <- ifelse(is.null(quoted$created_at) == FALSE, suppressWarnings(convert_date(quoted$created_at)), NA)
+      df2$quoted_created_at[i] <- quoted_created_at
 
-      quoted_source <- quoted$source
+      quoted_source <- ifelse(is.null(quoted$source) == FALSE, quoted$source, NA)
       df2$quoted_source[i] <- quoted_source
 
       quoted_url <- ifelse(
